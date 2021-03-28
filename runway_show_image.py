@@ -12,7 +12,6 @@ screen = M5Screen()
 screen.clean_screen()
 screen.set_screen_bg_color(0x387f98)
 
-
 x = None
 y = None
 url = None
@@ -31,12 +30,14 @@ label1 = M5Label('text', x=0, y=217, color=0x000, font=FONT_UNICODE_24, parent=N
 label0.set_hidden(True)
 if wifiCfg.wlan_sta.isconnected():
   label0.set_text('wifi ok')
-wait(5)
+wait_ms(500)
 label0.set_text('')
 size = 320
 
 
-# Describe this function...
+# http post to runway_ml 
+
+
 def runway(x, y):
   global url, output, img, headers, inputs, status, size, neuron, runway_set
   url = 'https://<runway-ml-model>.hosted-models.runwayml.cloud/v1/query'
@@ -50,7 +51,7 @@ def runway(x, y):
   output = json.loads((req.text))
   return output
 
-# Describe this function...
+# formats image from base 64 to lcd
 def format_image():
   global x, y, url, output, img, headers, inputs, status, size, neuron, runway_set
   img = output['image']
